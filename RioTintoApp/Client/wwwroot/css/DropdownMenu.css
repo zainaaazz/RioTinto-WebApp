@@ -1,0 +1,63 @@
+
+
+/* Container for the dropdown */
+.dropdown-container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Gray block for the dropdown header */
+.dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    color: #32353b; /* Darker text for readability */
+    align-items: center;
+    background-color: #e0e0e0; /* Light gray background */
+    padding: 1rem;
+    font-size: 1rem;
+    font-family:Arial;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: underline solid #282727; /* Underline color matches the text */
+    text-underline-offset: 3px; /* Adds space between the text and the underline */
+    text-decoration-thickness: 1px; /* Adjusts the thickness of the underline */
+}
+
+.dropdown-header:hover {
+    background-color: #d6d6d6; /* Darker gray on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow */
+}
+
+/* Arrow icon for rotation effect */
+.arrow-icon {
+    transition: transform 0.3s ease; /* Smooth rotation animation */
+}
+
+/* Gray block for dropdown content */
+.dropdown-content {
+    background-color: #ededed; /* Light gray background for the content */
+    padding: 1rem;
+    margin-top: 0.3rem; /* Adds space between the header and the content */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 6px 7px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    font-size: 0.9rem; /* Adjust text size */
+    color: #32353b; /* Darker text for readability */
+    line-height: 1; /* Improves readability */
+}
+
+/* Styling for list items */
+.dropdown-content ul {
+    margin: 0;
+    padding-left: 1.5rem; /* Indentation for list items */
+}
+
+.dropdown-content li {
+    margin-bottom: 0.5rem; /* Adds space between list items */
+}
+
+.dropdown-header .oi {
+    margin-right: 0.5rem; /* Adds space between the icon and text */
+}

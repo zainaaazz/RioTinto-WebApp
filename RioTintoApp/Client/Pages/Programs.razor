@@ -1,0 +1,581 @@
+﻿@page "/programs"
+@using RioTintoApp.Shared
+@inject HttpClient Http
+
+<PageTitle>Programs</PageTitle>
+
+<h1>Programs</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<div class="full-width-image">
+    <img src="images/ganttChart2.png" alt="Gantt Chart" />
+</div>
+
+<style>
+    .full-width-image {
+    width: 100%; /* Ensures it spans the full width of the screen */
+    overflow: hidden; /* Ensures no extra content appears outside the container */
+}
+
+.full-width-image img {
+    width: 100%; /* Makes the image span the full width of the screen */
+    height: auto; /* Maintains the aspect ratio */
+    display: block; /* Removes extra spacing below the image */
+    border: 2px solid #282727; /* Adds a black border (change color as needed) */
+    border-radius: 10px; /* Optional: Adds rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow for depth */
+}
+}
+</style>
+
+<div class="dropdown-container">
+    <!-- Gray block for the header -->
+    <div class="dropdown-header" @onclick="ToggleDropdown1">
+        <span>
+            <span class="oi oi-chevron-right" aria-hidden="true"></span> <!-- Optional icon -->
+            Program 1: Road and Bridge Construction
+        </span>
+        <i class="arrow-icon" style="@(isExpanded1 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    <!-- Gray block for the content -->
+    @if (isExpanded1)
+    {
+        <div class="dropdown-content">
+            <p><strong>Problem Addressed:</strong> Lack of reliable infrastructure limits access to education, healthcare, and economic opportunities. Poor road connectivity increases the cost of goods and delays transportation.</p>
+            <p><strong>Objective:</strong> Build trust and provide immediate, tangible benefits by enhancing infrastructure.</p>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="top-left">Action Plan</td>
+                        <td>
+                            <ul>
+                                <li>Conduct feasibility studies for local infrastructure projects.</li>
+                                <li>Train and hire community members in construction skills.</li>
+                                <li>Partner with contractors to prioritize local hiring.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Budget</td>
+                        <td>
+                            <ul>
+                                <li>Equipment and tools: $2 million.</li>
+                                <li>Training and hiring: $500,000.</li>
+                                <li>Contractor partnerships: $1 million.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Timeline</td>
+                        <td>
+                            <ul>
+                                <li>Feasibility studies: 3 months.</li>
+                                <li>Construction and training: 12 months.</li>
+                                <li>Maintenance framework setup: 2 months.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Resources Needed</td>
+                        <td>
+                            <ul>
+                                <li>Construction equipment (e.g., graders, cement mixers).</li>
+                                <li>Technical experts for feasibility studies and training.</li>
+                                <li>Skilled/unskilled local labor.</li>
+                                <li>Partnerships with construction companies.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+    
+
+
+
+
+<div class="dropdown-container">
+    <!-- Gray block for the header -->
+    <div class="dropdown-header" @onclick="ToggleDropdown2">
+        <span>
+            <span class="oi oi-chevron-right" aria-hidden="true"></span>
+            Program 2: Water and Sanitation Projects
+        </span>
+        <i class="arrow-icon" style="@(isExpanded2 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    @if (isExpanded2)
+    {
+        <div class="dropdown-content">
+            <p><strong>Problem Addressed:</strong> Communities suffer from a lack of access to clean water and proper sanitation facilities, leading to health issues such as waterborne diseases and poor hygiene.</p>
+            <p><strong>Objective:</strong> Improve quality of life and address health and hygiene needs.</p>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="top-left">Action Plan</td>
+                        <td>
+                            <ul>
+                                <li>Identify communities with critical water and sanitation needs.</li>
+                                <li>Train locals in plumbing, borehole construction, and sanitation systems.</li>
+                                <li>Partner with NGOs and government bodies for funding and expertise.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Budget</td>
+                        <td>
+                            <ul>
+                                <li>Plumbing and construction training: $300,000.</li>
+                                <li>Borehole construction: $1.2 million.</li>
+                                <li>NGO partnerships: $500,000.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Timeline</td>
+                        <td>
+                            <ul>
+                                <li>Needs assessment and partnerships: 2 months.</li>
+                                <li>Implementation: 8 months.</li>
+                                <li>Monitoring and follow-up: 3 months.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Resources Needed</td>
+                        <td>
+                            <ul>
+                                <li>Plumbing tools and construction materials.</li>
+                                <li>Trainers for plumbing and sanitation systems.</li>
+                                <li>Partnerships with NGOs and community specialists.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+<!-- Program 3: Leadership, Trust, and Confidence Workshops -->
+<div class="dropdown-container">
+    <div class="dropdown-header" @onclick="ToggleDropdown3">
+        <span>
+            <span class="oi oi-chevron-right" aria-hidden="true"></span>
+            Program 3: Leadership, Trust, and Confidence Workshops
+        </span>
+        <i class="arrow-icon" style="@(isExpanded3 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    @if (isExpanded3)
+    {
+        <div class="dropdown-content">
+            <p><strong>Problem Addressed:</strong> Cultural and communication barriers hinder collaboration and inclusivity, particularly among women and underrepresented groups in decision-making roles.</p>
+            <p><strong>Objective:</strong> Overcome cultural barriers and foster inclusive community engagement.</p>
+            <table class="styled-table">
+                <thead>
+                    <tr><th>Category</th><th>Details</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="top-left">Action Plan</td>
+                        <td>
+                            <ul>
+                                <li>Organize workshops on leadership, communication, and decision-making.</li>
+                                <li>Partner with women’s organizations for accessibility and inclusivity.</li>
+                                <li>Provide training in public speaking and financial literacy.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Resources Needed</td>
+                        <td>
+                            <ul>
+                                <li>Trainers skilled in leadership and communication.</li>
+                                <li>Marketing materials (flyers, social media campaigns).</li>
+                                <li>Venues with basic facilities (seating, projectors).</li>
+                                <li>Translation services for linguistic inclusivity.</li>
+                                <li>Incentives like meals or transportation reimbursements.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<!-- Program 4: Youth Empowerment -->
+<div class="dropdown-container">
+    <div class="dropdown-header" @onclick="ToggleDropdown4">
+        <span>
+            <span class="oi oi-chevron-right" aria-hidden="true"></span>
+            Program 4: Youth Empowerment
+        </span>
+        <i class="arrow-icon" style="@(isExpanded4 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    @if (isExpanded4)
+    {
+        <div class="dropdown-content">
+            <p><strong>Problem Addressed:</strong> Limited educational opportunities and skills development leave youth unprepared for meaningful employment, contributing to high unemployment rates.</p>
+            <p><strong>Objective:</strong> Promote education and prepare youth for skilled roles.</p>
+            <table class="styled-table">
+                <thead>
+                    <tr><th>Category</th><th>Details</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="top-left">Action Plan</td>
+                        <td>
+                            <ul>
+                                <li>Create scholarships for students in STEM and technical fields.</li>
+                                <li>Collaborate with local schools to identify high-potential students.</li>
+                                <li>Offer internships and mentorship programs within the mining company.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Budget</td>
+                        <td>
+                            <ul>
+                                <li>Scholarship fund: $1 million annually.</li>
+                                <li>Internship stipends: $500,000 annually.</li>
+                                <li>Mentorship programs: $200,000 annually.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Timeline</td>
+                        <td>
+                            <ul>
+                                <li>Scholarship announcement: Annual cycle.</li>
+                                <li>Internship programs: Rolling basis.</li>
+                                <li>School collaborations: 6 months.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Resources Needed</td>
+                        <td>
+                            <ul>
+                                <li>Scholarship funds for tuition and living expenses.</li>
+                                <li>Mentors for guidance.</li>
+                                <li>Stipends for internship participants.</li>
+                                <li>Educational partnerships for curriculum alignment.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<!-- Program 5: Access to Markets and Financing -->
+<div class="dropdown-container">
+    <div class="dropdown-header" @onclick="ToggleDropdown5">
+        <span>
+            <span class="oi oi-chevron-right" aria-hidden="true"></span>
+            Program 5: Access to Markets and Financing
+        </span>
+        <i class="arrow-icon" style="@(isExpanded5 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    @if (isExpanded5)
+    {
+        <div class="dropdown-content">
+            <p><strong>Problem Addressed:</strong> Entrepreneurs face difficulty accessing capital and markets, limiting their ability to scale and sustain their businesses.</p>
+            <p><strong>Objective:</strong> Encourage entrepreneurship and local economic activity.</p>
+            <table class="styled-table">
+                <thead>
+                    <tr><th>Category</th><th>Details</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="top-left">Action Plan</td>
+                        <td>
+                            <ul>
+                                <li>Establish a microfinance fund to support women-led enterprises.</li>
+                                <li>Conduct market linkages workshops for entrepreneurs.</li>
+                                <li>Build an app to showcase and advertise local products.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Budget</td>
+                        <td>
+                            <ul>
+                                <li>Microfinance fund: $2 million.</li>
+                                <li>App development: $300,000.</li>
+                                <li>Workshops and training: $200,000.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Timeline</td>
+                        <td>
+                            <ul>
+                                <li>Microfinance setup: 6 months.</li>
+                                <li>App development: 4 months.</li>
+                                <li>Training sessions: Rolling (every 2 months).</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Resources Needed</td>
+                        <td>
+                            <ul>
+                                <li>Trainers for workshops.</li>
+                                <li>Technology team for app development.</li>
+                                <li>Partnerships with local banks for credit access.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<!-- Program 6: Technical Schools -->
+<div class="dropdown-container">
+    <div class="dropdown-header" @onclick="ToggleDropdown6">
+        <span>
+            <span class="oi oi-chevron-right" aria-hidden="true"></span>
+            Program 6: Technical Schools
+        </span>
+        <i class="arrow-icon" style="@(isExpanded6 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    @if (isExpanded6)
+    {
+        <div class="dropdown-content">
+            <p><strong>Problem Addressed:</strong> Lack of vocational training and technical education results in a skills gap, preventing locals from taking advantage of employment opportunities in the mining sector.</p>
+            <p><strong>Objective:</strong> Address skills gaps and create a sustainable talent pipeline.</p>
+            <table class="styled-table">
+                <thead>
+                    <tr><th>Category</th><th>Details</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="top-left">Action Plan</td>
+                        <td>
+                            <ul>
+                                <li>Sponsor construction of classrooms and vocational training centers.</li>
+                                <li>Develop industry-aligned courses (e.g., mining safety, machine operation).</li>
+                                <li>Train teachers in technical fields.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Budget</td>
+                        <td>
+                            <ul>
+                                <li>Classroom construction: $3 million.</li>
+                                <li>Curriculum development: $500,000.</li>
+                                <li>Teacher training: $300,000.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Timeline</td>
+                        <td>
+                            <ul>
+                                <li>Construction and curriculum development: 18 months.</li>
+                                <li>Teacher training and recruitment: 6 months.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-left">Resources Needed</td>
+                        <td>
+                            <ul>
+                                <li>Construction materials.</li>
+                                <li>Curriculum development experts.</li>
+                                <li>Funding for scholarships and operational costs.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="dropdown-container">
+    <!-- Gray block for the header -->
+    <div class="dropdown-header" @onclick="ToggleDropdown7">
+        <span>
+            <span class="oi oi-chevron-right" aria-hidden="true"></span> <!-- Optional icon -->
+            Program 7: Partner with Local Businesses
+        </span>
+        <i class="arrow-icon" style="@(isExpanded7 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    <!-- Gray block for the content -->
+    @if (isExpanded7)
+    {
+      
+
+  <div class="dropdown-content">
+    <p><strong>Problem Addressed:</strong> Local businesses are often excluded from large-scale projects, missing out on economic opportunities and growth potential.</p>
+    <p><strong>Objective:</strong> Integrate local enterprises into the project’s value chain.</p>
+
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="top-left">Action Plan</td>
+                <td>
+                    <ul>
+                        <li>Identify local businesses in relevant sectors (construction, logistics, etc.).</li>
+                        <li>Negotiate agreements for apprenticeships and local hiring.</li>
+                        <li>Offer subsidies to businesses hosting apprentices.</li>
+                        <li>Develop programs for sourcing goods and services from local vendors.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td class="top-left">Budget</td>
+                <td>
+                    <ul>
+                        <li>Subsidies and incentives: $1 million.</li>
+                        <li>Program development: $200,000.</li>
+                        <li>Apprenticeship costs: $300,000.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td class="top-left">Timeline</td>
+                <td>
+                    <ul>
+                        <li>Business identification and agreements: 3 months.</li>
+                        <li>Apprenticeship rollout: Rolling basis.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td class="top-left">Resources Needed</td>
+                <td>
+                    <ul>
+                        <li>Liaison officers for negotiations.</li>
+                        <li>Subsidy funds.</li>
+                        <li>Networking platforms for businesses.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    }
+</div>
+
+@code {
+    private bool isExpanded1 = false;
+    private bool isExpanded2 = false;
+     private bool isExpanded3 = false;
+      private bool isExpanded4 = false;
+       private bool isExpanded5 = false;
+       private bool isExpanded6 = false;
+    private bool isExpanded7 = false;
+
+    private void ToggleDropdown1()
+    {
+        isExpanded1 = !isExpanded1;
+    }
+
+     private void ToggleDropdown2()
+    {
+        isExpanded2 = !isExpanded2;
+    }
+
+    private void ToggleDropdown3()
+    {
+        isExpanded3 = !isExpanded3;
+    }
+
+    private void ToggleDropdown4()
+    {
+        isExpanded4 = !isExpanded4;
+    }
+
+    private void ToggleDropdown5()
+    {
+        isExpanded5 = !isExpanded5;
+    }
+
+    private void ToggleDropdown6()
+    {
+        isExpanded6 = !isExpanded6;
+    }
+
+    private void ToggleDropdown7()
+    {
+        isExpanded7 = !isExpanded7;
+    }
+}
+
+
+
+<style>
+    
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse; /* Removes extra spacing between cells */
+    margin-top: 1rem;
+}
+
+    .styled-table th,
+    .styled-table td {
+        border: 1px solid black; /* Black borders for cells */
+        padding: 10px; /* Adds padding for better readability */
+        text-align: left; /* Aligns text to the left by default */
+        vertical-align: top; /* Ensures content in the Category column aligns to the top */
+    }
+
+    .styled-table th {
+        background-color: #f2f2f2; /* Light gray background for the header */
+        font-weight: bold; /* Makes header text bold */
+    }
+
+    .styled-table td.top-left {
+        text-align: left; /* Left-aligns text */
+        vertical-align: top; /* Top-aligns text */
+    }
+
+
+</style>

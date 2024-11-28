@@ -1,0 +1,257 @@
+@page "/analytics"
+@using RioTintoApp.Shared
+@inject HttpClient Http
+
+<PageTitle>Tracking Analytics</PageTitle>
+
+<h1>Tracking Analytics</h1>
+
+<style>
+    .btn-custom-primary {
+        background-color: #eb0029;
+        border-color: #32353b;
+        color: #ebebeb;
+    }
+
+    .btn-custom-info {
+        background-color: #32353b;
+        border-color: #32353b;
+        color: #ebebeb;
+    }
+
+    .btn-custom-primary:hover, .btn-custom-info:hover {
+        background-color: #ebebeb;
+        border-color: #32353b;
+    }
+</style>
+
+<div class="container mt-4">
+    <!-- Navigation for Programs -->
+    <div class="d-flex flex-wrap">
+        @foreach (var program in Programs)
+        {
+            <button class="btn btn-custom-primary m-2" @onclick="() => ShowProgramItems(program.Id)">
+                @program.Name
+            </button>
+        }
+    </div>
+
+    <!-- Navigation for Items within a Program -->
+    @if (SelectedProgramItems != null)
+    {
+        <div class="d-flex flex-wrap">
+            @foreach (var item in SelectedProgramItems)
+            {
+                <button class="btn btn-custom-info m-2" @onclick="() => ShowItemDetails(item.Id)">
+                    @item.Name
+                </button>
+            }
+        </div>
+    }
+</div>
+
+    <!-- Display Details for the Selected Item -->
+    @if (SelectedItemDetails != null)
+    {
+        <div class="mt-4 p-4 border rounded bg-light">
+            <h2>@SelectedItemDetails.Name</h2>
+            <p><strong>Scheduled Duration:</strong> @SelectedItemDetails.ScheduledDuration</p>
+            <p><strong>Actual Duration:</strong> @SelectedItemDetails.ActualDuration</p>
+            <p><strong>Status:</strong> @SelectedItemDetails.Status</p>
+
+            @if (!string.IsNullOrEmpty(SelectedItemDetails.ImagePath))
+            {
+                <img src="@SelectedItemDetails.ImagePath" alt="@SelectedItemDetails.Name Progress" class="img-fluid" style="width: 70%;" />
+            }
+
+            <h4>Steps:</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Step Number</th>
+                        <th>Action Item</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Days Taken</th>
+                        <th>Completion Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var step in SelectedItemDetails.Steps)
+                    {
+                        <tr>
+                            <td>@step.StepNumber</td>
+                            <td>@step.ActionItem</td>
+                            <td>@(step.StartDate?.ToShortDateString() ?? "-")</td>
+                            <td>@(step.EndDate?.ToShortDateString() ?? "-")</td>
+                            <td>@(step.DaysTaken.HasValue ? step.DaysTaken.Value.ToString() : "-")</td>
+                            <td>@step.CompletionStatus</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <p class="mt-3"><strong>Analysis:</strong> @SelectedItemDetails.Description</p>
+        </div>
+    }
+
+
+@code {
+    private List<Program> Programs = new()
+    {
+        new Program { Id = 1, Name = "Program 1" },
+        new Program { Id = 2, Name = "Program 2" },
+        new Program { Id = 3, Name = "Program 3" },
+        new Program { Id = 4, Name = "Program 4" },
+        new Program { Id = 5, Name = "Program 5" },
+        new Program { Id = 6, Name = "Program 6" },
+        new Program { Id = 7, Name = "Program 7" }
+    };
+
+    private Dictionary<int, List<Item>> ProgramItems = new()
+    {
+        {
+            1, new List<Item>
+            {
+                new Item { Id = 1, Name = "Feasibility Studies" },
+                new Item { Id = 2, Name = "Construction and Training" },
+                new Item { Id = 3, Name = "Maintenance Framework Setup" }
+            }
+        }
+    };
+
+    private Dictionary<int, ItemDetails> ItemDetailsData = new()
+    {
+        {
+            1, new ItemDetails
+            {
+                Id = 1,
+                Name = "Feasibility Studies",
+                ScheduledDuration = "3 months",
+                ActualDuration = "80 days (approximately 2.6 months)",
+                Status = "Completed",
+                ImagePath = "images/Graph1.png",
+                Description = "Scheduled Start Date: August 1, 2023\nScheduled Completion Date: October 20, 2023\nActual Duration: 80 days (approximately 2.6 months)\n\nCompletion Status: Completed\n\nAnalysis:The feasibility studies were completed within the estimated 3-month schedule.\nActions like stakeholder meetings, environmental assessments, and design drafting adhered well to the timeline.\n\nStatus: On Schedule",
+                Steps = new List<Step>
+                {
+                    new Step { StepNumber = 1, ActionItem = "Meet with stakeholders to gather infrastructure needs and priorities.", StartDate = new DateTime(2023, 08, 01), EndDate = new DateTime(2023, 08, 07), DaysTaken = 6, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 2, ActionItem = "Survey locations and evaluate terrain, existing infrastructure, and obstacles.", StartDate = new DateTime(2023, 08, 08), EndDate = new DateTime(2023, 08, 18), DaysTaken = 10, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 3, ActionItem = "Estimate traffic volume and identify critical routes.", StartDate = new DateTime(2023, 08, 19), EndDate = new DateTime(2023, 08, 21), DaysTaken = 2, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 4, ActionItem = "Assess environmental risks and plan mitigation measures.", StartDate = new DateTime(2023, 08, 22), EndDate = new DateTime(2023, 08, 28), DaysTaken = 6, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 5, ActionItem = "Compare project costs with economic and social benefits.", StartDate = new DateTime(2023, 08, 29), EndDate = new DateTime(2023, 09, 02), DaysTaken = 4, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 6, ActionItem = "Draft preliminary road and bridge designs with material and equipment needs.", StartDate = new DateTime(2023, 09, 03), EndDate = new DateTime(2023, 09, 10), DaysTaken = 7, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 7, ActionItem = "Identify available local labour, materials, and training needs.", StartDate = new DateTime(2023, 09, 11), EndDate = new DateTime(2023, 09, 19), DaysTaken = 8, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 8, ActionItem = "Review regulations, secure permits, and ensure safety standards.", StartDate = new DateTime(2023, 09, 19), EndDate = new DateTime(2023, 09, 25), DaysTaken = 6, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 9, ActionItem = "Identify risks (e.g., delays, shortages) and create contingency plans.", StartDate = new DateTime(2023, 09, 26), EndDate = new DateTime(2023, 09, 29), DaysTaken = 3, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 10, ActionItem = "Develop a timeline with milestones for feasibility, construction, and maintenance.", StartDate = new DateTime(2023, 10, 03), EndDate = new DateTime(2023, 10, 09), DaysTaken = 6, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 11, ActionItem = "Present plans, gather input, and adjust accordingly.", StartDate = new DateTime(2023, 10, 10), EndDate = new DateTime(2023, 10, 16), DaysTaken = 6, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 12, ActionItem = "Compile findings, designs, budgets, and submit for approval.", StartDate = new DateTime(2023, 10, 17), EndDate = new DateTime(2023, 10, 20), DaysTaken = 3, CompletionStatus = "Completed" },
+
+                }
+            }
+        },
+        {
+            2, new ItemDetails
+            {
+                Id = 2,
+                Name = "Construction and Training",
+                ScheduledDuration = "12 months",
+                ActualDuration = "Delayed",
+                Status = "In Progress",
+                ImagePath = "images/Graph2.png",
+                Description = "Scheduled Start Date: October 21, 2023\nScheduled Completion Date: October 20, 2024\nActual Progress: As of November 28, 2024, the scheduled completion date has passed, and construction is not fully completed.\nCurrent tasks indicate progress up to Step 8 (safety inspections and compliance checks, ending September 23, 2024).\nLater tasks (e.g., construction completion and final training) remain unfinished.\n\nAnalysis: This phase is behind schedule, as the completion date (October 20, 2024) has passed.\nDelays in subsequent steps could compound and affect the readiness of the Maintenance Framework Setup, potentially causing a cascade of delays.",
+                Steps = new List<Step>
+                {
+                    new Step { StepNumber = 1, ActionItem = "Secure equipment and materials for construction.", StartDate = new DateTime(2023, 10, 21), EndDate = new DateTime(2023, 11, 14), DaysTaken = 24, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 2, ActionItem = "Prepare the construction site and set up safety measures.", StartDate = new DateTime(2023, 11, 15), EndDate = new DateTime(2023, 12, 19), DaysTaken = 34, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 3, ActionItem = "Conduct training sessions for local workers on construction.", StartDate = new DateTime(2023, 12, 20), EndDate = new DateTime(2024, 02, 02), DaysTaken = 44, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 4, ActionItem = "Begin foundation work for roads and bridges.", StartDate = new DateTime(2024, 02, 03), EndDate = new DateTime(2024, 03, 28), DaysTaken = 54, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 5, ActionItem = "Lay infrastructure (e.g., asphalt for roads, beams for bridges).", StartDate = new DateTime(2024, 03, 29), EndDate = new DateTime(2024, 05, 31), DaysTaken = 63, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 6, ActionItem = "Monitor construction progress and address issues.", StartDate = new DateTime(2024, 06, 01), EndDate = new DateTime(2024, 07, 05), DaysTaken = 34, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 7, ActionItem = "Conduct quality assurance checks for completed sections.", StartDate = new DateTime(2024, 07, 06), EndDate = new DateTime(2024, 08, 19), DaysTaken = 44, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 8, ActionItem = "Implement safety inspections and compliance checks.", StartDate = new DateTime(2024, 08, 20), EndDate = new DateTime(2024, 09, 23), DaysTaken = 34, CompletionStatus = "Completed" },
+                    new Step { StepNumber = 9, ActionItem = "Complete construction of roads and bridges.", StartDate = new DateTime(2024, 09, 24), EndDate = new DateTime(2024, 11, 17), DaysTaken = 54, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 10, ActionItem = "Provide final training for maintenance staff.", StartDate = new DateTime(2024, 11, 18), EndDate = new DateTime(2024, 11, 28), DaysTaken = 10, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 11, ActionItem = "Hand over the infrastructure to the community.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 12, ActionItem = "Submit final reports and evaluations.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+
+                }
+            }
+        },
+        {
+            3, new ItemDetails
+            {
+                Id = 3,
+                Name = "Maintenance Framework Setup",
+                ScheduledDuration = "2 months",
+                ActualDuration = "Not Started",
+                Status = "Pending",
+                ImagePath = "images/Graph3.png",
+                Description = "Analysis not available as predecessor is incomplete. This will delay overall Program 1 completion time.",
+                Steps = new List<Step>
+                {
+                    new Step { StepNumber = 1, ActionItem = "Identify maintenance requirements for roads and bridges.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 2, ActionItem = "Define maintenance standards for performance and safety.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 3, ActionItem = "Create maintenance schedules for periodic inspections and tasks.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 4, ActionItem = "Recruit and train local workers for maintenance roles.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 5, ActionItem = "Procure tools and equipment for maintenance activities.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 6, ActionItem = "Set up a dedicated maintenance fund.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 7, ActionItem = "Develop reporting mechanisms for tasks and incidents.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 8, ActionItem = "Partner with local authorities for co-management.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 9, ActionItem = "Implement safety protocols for maintenance teams.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 10, ActionItem = "Create emergency response plans for urgent issues.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 11, ActionItem = "Deploy monitoring systems to track infrastructure conditions.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+                    new Step { StepNumber = 12, ActionItem = "Evaluate and optimize the maintenance framework.", StartDate = null, EndDate = null, DaysTaken = 0, CompletionStatus = "Not Completed" },
+
+                }
+            }
+        }
+    };
+
+    private List<Item>? SelectedProgramItems = null;
+    private ItemDetails? SelectedItemDetails = null;
+
+    private void ShowProgramItems(int programId)
+    {
+        ProgramItems.TryGetValue(programId, out SelectedProgramItems);
+        SelectedItemDetails = null;
+    }
+
+    private void ShowItemDetails(int itemId)
+    {
+        ItemDetailsData.TryGetValue(itemId, out SelectedItemDetails);
+    }
+
+    public class Program
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Item
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class ItemDetails
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; } = "";
+        public string ScheduledDuration { get; set; }
+        public string ActualDuration { get; set; }
+        public string Status { get; set; }
+        public string ImagePath { get; set; }
+        public List<Step> Steps { get; set; } = new();
+    }
+
+    public class Step
+    {
+        public int StepNumber { get; set; }
+        public string ActionItem { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public int? DaysTaken { get; set; }
+        public string CompletionStatus { get; set; }
+    }
+}

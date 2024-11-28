@@ -1,0 +1,251 @@
+@page "/research"
+@using RioTintoApp.Shared
+@inject HttpClient Http
+
+<PageTitle>Research</PageTitle>
+
+<h1>Simandou Research</h1>
+
+<h2>Nzérékoré, Guinea</h2>
+
+<p>
+    Nzérékoré is Guinea's second-largest city and a key commercial and economic hub in the southeastern region. The city is culturally diverse, with various ethnic groups contributing to a rich blend of traditions and languages. The local economy is primarily driven by agriculture, commerce, handicrafts, and small to medium-sized enterprises.
+</p>
+
+<ul>
+    <li>Road infrastructure is underdeveloped, with many unpaved roads that are difficult to navigate, especially during the rainy season, hindering transportation and trade.</li>
+    <li>Nzérékoré has benefited from the CLSG interconnection project, which has improved electricity supply for residents and businesses.</li>
+    <li>Other infrastructure, such as healthcare, education, and sanitation, still requires significant development to meet population demands.</li>
+    <li>Despite challenges, Nzérékoré remains a vibrant cultural and economic center in the region.</li>
+</ul>
+
+<h2>Understanding the Area</h2>
+
+<div class="dropdown-container">
+  <!-- Gray block for the header -->
+    <div class="dropdown-header" @onclick="ToggleDropdown">
+        <span>
+            <span class="oi oi-person" aria-hidden="true"></span> <!-- Optional icon -->
+            Demographics
+        </span>
+        <i class="arrow-icon" style="@(isExpanded ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    <!-- Gray block for the content -->
+    @if (isExpanded)
+    {
+        <div class="dropdown-content">
+      <ul>
+    <li><strong>Population Size:</strong> The Nzérékoré Region has an estimated population of approximately 1.9 million people.</li>
+    <li><strong>Age Distribution:</strong> The median age in the region is 16.1 years, indicating a youthful population.</li>
+    <li><strong>Gender Ratios:</strong> The population comprises about 48.2% males and 51.8% females.</li>
+</ul>
+        </div>
+    }
+</div>
+
+
+<div class="dropdown-container">
+  <!-- Gray block for the header -->
+    <div class="dropdown-header" @onclick="ToggleDropdown1">
+        <span>
+            <span class="oi oi-vertical-align-bottom" aria-hidden="true"></span> <!-- Optional icon -->
+            Employment and Economy
+        </span>
+        <i class="arrow-icon" style="@(isExpanded1 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    <!-- Gray block for the content -->
+    @if (isExpanded1)
+    {
+        <div class="dropdown-content">
+    <ul>
+    <li><strong>Dominant Industries:</strong> Agriculture is the primary source of employment, with significant activities in commerce, handicrafts, and small to medium-sized enterprises.</li>
+    <li><strong>Income Levels:</strong> Specific income data is limited; however, the region's economic activities suggest a reliance on subsistence agriculture and small-scale trade.</li>
+</ul>
+
+        </div>
+    }
+</div>
+
+
+<div class="dropdown-container">
+  <!-- Gray block for the header -->
+    <div class="dropdown-header" @onclick="ToggleDropdown2">
+        <span>
+            <span class="oi oi-book" aria-hidden="true"></span> <!-- Optional icon -->
+            Education and Skills
+        </span>
+        <i class="arrow-icon" style="@(isExpanded2 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    <!-- Gray block for the content -->
+    @if (isExpanded2)
+    {
+        <div class="dropdown-content">
+     <ul>
+    <li><strong>Literacy Rates:</strong> Detailed literacy statistics are not readily available, but educational infrastructure investments, such as the construction of 18 classrooms, indicate efforts to improve literacy.</li>
+    <li><strong>School Attendance:</strong> The region has undertaken initiatives to enhance educational participation, including plans to build 100 classrooms and two vocational training centers.</li>
+    <li><strong>Vocational Training Availability:</strong> There are plans to establish vocational training centers to equip residents with practical skills.</li>
+</ul>
+
+        </div>
+    }
+</div>
+
+
+
+
+<div class="dropdown-container">
+  <!-- Gray block for the header -->
+    <div class="dropdown-header" @onclick="ToggleDropdown3">
+        <span>
+            <span class="oi oi-plus" aria-hidden="true"></span> <!-- Optional icon -->
+           Healthcare Access
+        </span>
+        <i class="arrow-icon" style="@(isExpanded3 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    <!-- Gray block for the content -->
+    @if (isExpanded3)
+    {
+        <div class="dropdown-content">
+     <ul>
+    <li><strong>Healthcare Facilities:</strong> The region has invested in healthcare by constructing and equipping health centers.</li>
+    <li><strong>Quality of Care:</strong> Efforts to combat diseases like COVID-19 and Ebola have included distributing health kits to the population.</li>
+</ul>
+
+        </div>
+    }
+</div>
+
+
+
+
+
+<div class="dropdown-container">
+  <!-- Gray block for the header -->
+    <div class="dropdown-header" @onclick="ToggleDropdown4">
+        <span>
+            <span class="oi oi-task" aria-hidden="true"></span> <!-- Optional icon -->
+            Infrastructure
+        </span>
+        <i class="arrow-icon" style="@(isExpanded4 ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    <!-- Gray block for the content -->
+    @if (isExpanded4)
+    {
+        <div class="dropdown-content">
+      <ul>
+    <li><strong>Access to Clean Water:</strong> The region has implemented sanitation actions, including waste collection and transformation, to improve environmental sustainability.</li>
+    <li><strong>Electricity:</strong> Specific data on electricity access is limited, but infrastructure development is ongoing.</li>
+    <li><strong>Transport:</strong> The region's infrastructure includes roads connecting key areas, with ongoing projects to enhance transportation links.</li>
+</ul>
+
+        </div>
+    }
+</div>
+
+
+<h2>Challenges faced by the community</h2>
+
+<h3>Poverty and Inequality</h3>
+
+ <ul>
+    <li>43% of Guinean households live below the poverty line, with rural areas, women, and those without education being disproportionately affected.</li>
+
+    <li>Income inequality is stark, with the richest 10% earning 42% of total income while the bottom 50% earn only 17%.</li>
+    
+</ul>
+
+<h3>Limited Access to Education</h3>
+
+    <p>Guinea has low public spending on education compared to Sub-Saharan and other low-income countries, contributing to a lack of educational opportunities and perpetuating inequality.</p>
+
+<h3>Economic Dependence on Mining</h3>
+
+<p>The economy is heavily reliant on mining, which accounts for 21% of GDP and over 90% of exports, making it vulnerable to fluctuations in global commodity prices.</p>
+
+<div class="image-container">
+    <img src="images/chart.png" alt="Centered Image" />
+</div>
+
+<style>
+    .image-container {
+    display: flex; /* Enables Flexbox */
+    justify-content: left; /* Centers content horizontally */
+ /*   align-items: left;  Centers content vertically if needed */
+    width: 70%; /* Ensures the container spans the full width */
+}
+
+.image-container img {
+    max-width: 70%; /* Ensures the image doesn't overflow the container */
+    height: auto; /* Maintains the aspect ratio */
+      border: 2px solid black; /* Adds a black border */
+    border-radius: 10px; /* Optional: Adds rounded corners */
+}
+</style>
+
+
+@code {
+    private bool isExpanded = false;
+    private bool isExpanded1 = false;
+    private bool isExpanded2 = false;
+    private bool isExpanded3 = false;
+    private bool isExpanded4 = false;
+
+    private void ToggleDropdown()
+    {
+        isExpanded = !isExpanded;
+    }
+
+     private void ToggleDropdown1()
+    {
+        isExpanded1 = !isExpanded1;
+    }
+
+     private void ToggleDropdown2()
+    {
+        isExpanded2 = !isExpanded2;
+
+    }
+
+     private void ToggleDropdown3()
+    {
+        isExpanded3 = !isExpanded3;
+    }
+
+     private void ToggleDropdown4()
+    {
+        isExpanded4 = !isExpanded4;
+    }
+}
+
+
+
+
+
+
+
+
+<div class="gray-blocks-section">
+    <div class="gray-block">
+        <h3>Transport</h3>
+        <p>
+           A multi-user railway spanning over 620 km and new port facilities at Makatong.
+        </p>
+       
+    </div>
+    <div class="gray-block">
+        <h3>Economy</h3>
+        <p>
+            In 2023, we spent $378 million with over 300 Guinean registered companies.
+        </p>
+    </div>
+    <div class="gray-block">
+        <h3>Community</h3>
+        <p>
+          More than 9,400 jobs have been created, and we are committed to developing skills and training. 83% of our employees are Guinean.
+
+        </p>
+    </div>
+</div>
+
+
+

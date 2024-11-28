@@ -1,0 +1,41 @@
+﻿@page "/assessment"
+
+<PageTitle>Needs Assessment</PageTitle>
+
+<h1>Simandou Project - Needs Assessment</h1>
+
+
+<div class="dropdown-container">
+  <!-- Gray block for the header -->
+    <div class="dropdown-header" @onclick="ToggleDropdown">
+        <span>
+            <span class="oi oi-task" aria-hidden="true"></span> <!-- Optional icon -->
+            What makes for a good needs assessment?
+        </span>
+        <i class="arrow-icon" style="@(isExpanded ? "transform: rotate(90deg);" : "")">▶</i>
+    </div>
+    <!-- Gray block for the content -->
+    @if (isExpanded)
+    {
+        <div class="dropdown-content">
+            <p>
+                A good needs assessment:
+            </p>
+            <ul>
+                <li>Identifies and prioritizes the needs of a target population or organization.</li>
+                <li>Involves stakeholders in the assessment process to ensure all perspectives are considered.</li>
+                <li>Provides actionable recommendations for addressing identified needs.</li>
+                <li>Uses data-driven methods to justify the conclusions.</li>
+            </ul>
+        </div>
+    }
+</div>
+
+@code {
+    private bool isExpanded = false;
+
+    private void ToggleDropdown()
+    {
+        isExpanded = !isExpanded;
+    }
+}
